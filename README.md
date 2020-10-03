@@ -1,3 +1,7 @@
+# Workflow App Studio
+
+Workflow app management system with configuration based services CRUD and forms. Developed in Angular 2 and PrimeNG. Contains inline code editing tool and JSON based formatters, Tree navigations.
+
 # AddOnApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
