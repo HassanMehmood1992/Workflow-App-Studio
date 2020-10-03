@@ -1,0 +1,69 @@
+<div class="processItemContainer">
+  <h4 class="processItemHeading">Edit Process Settings</h4>
+  <div class="row">
+      <div class="col-sm-3">
+          <label class="mainLabel">
+              Objects:
+          </label>
+      </div>
+     
+  </div>
+  <div class="row">
+      <div class="col-sm-7">
+
+        <p-dropdown (onChange)="getSelectedSettings()" [options]="configurationItems" [(ngModel)]="selectedSettingName" [style]="{'width':'90%'}">
+          
+                          <ng-template let-cItem pTemplate="item">
+                              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                  <div style="font-size:14px;margin-top:4px">{{cItem.label}}</div>
+                              </div>
+                          </ng-template>
+          
+                      </p-dropdown>
+
+      </div>
+      
+      
+      
+  </div>
+
+  <app-json-validator [(jsonAreaModel)]="currentSettingVal" *ngIf="selectedSetting.Type=='json'" ></app-json-validator>
+  <div class="configArea" *ngIf="selectedSetting.Type=='textarea'">
+
+      <textarea [disabled]="editMode"  [(ngModel)]="currentSettingVal" rows="17" cols="50">
+          
+          </textarea>
+  </div>
+
+  <div class="configArea" *ngIf="selectedSetting.Type=='textbox'">
+    
+         <span class="ui-float-label">
+            <input id="float-input" type="text"  [(ngModel)]="currentSettingVal" maxlength="50" style="width:100%;" pInputText> 
+            <label for="float-input">Name</label>
+        </span>
+  
+      </div>
+
+  <div class="configArea" *ngIf="selectedSetting.Type=='dropdown'">
+    
+    <p-dropdown [options]="organizations"  [(ngModel)]="currentSettingVal"  (onChange)="setProcessDropDownValues()" [style]="{'width':'100%'}" filter="true">
+        
+                    <ng-template let-organization pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{organization.label}}</div>
+                        </div>
+                    </ng-template>
+        
+                </p-dropdown>
+  
+      </div>
+ 
+
+  <br/>
+  <div style="text-align:right">
+
+       <button (click)="applySettings()"  pButton class="actionButton" type="button" icon="fa-save" label="Save"></button>
+  </div>
+</div>
+
+<app-loading-dialog *ngIf="showLoading" ></app-loading-dialog>

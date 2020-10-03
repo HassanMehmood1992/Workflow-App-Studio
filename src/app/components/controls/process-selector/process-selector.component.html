@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-sm-6">
+        <label class="mainLabel">
+                Organization
+        </label>
+        <p-dropdown [options]="organizations"  [(ngModel)]="selectedOrganization" (ngModelChange)="emitSelectedOrganizationVal()"  (onChange)="setProcessDropDownValues()" [style]="{'width':'370px'}" filter="true">
+
+            <ng-template let-organization pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;margin-top:4px">{{organization.label}}</div>
+                </div>
+            </ng-template>
+
+        </p-dropdown>
+
+    </div>
+    <div class="col-sm-6">
+        <label class="mainLabel">
+                    Process
+            </label>
+        <p-dropdown [options]="processes" [(ngModel)]="selectedProcess" (ngModelChange)="emitSelectedProcessVal()" [style]="{'width':'370px'}" filter="true">
+
+            <ng-template let-process pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;margin-top:4px">{{process.label}}</div>
+                </div>
+            </ng-template>
+
+        </p-dropdown>
+    </div>
+</div>

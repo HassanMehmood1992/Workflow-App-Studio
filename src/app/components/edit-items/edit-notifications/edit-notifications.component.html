@@ -1,0 +1,238 @@
+<div class="processItemContainer">
+    <h4 class="processItemHeading">Edit Notifications</h4>
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="mainLabel">
+                Form:
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <label class="mainLabel">
+                Notification Types:
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <p-dropdown (onChange)="setNotificationTypes()" [options]="workflows" [(ngModel)]="selectedWorkflow" [style]="{'width':'90%'}">
+                <ng-template let-workflow pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{workflow.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-sm-4">
+            <p-dropdown (onChange)="setTemplateDetails()" [options]="notificationTypes" [(ngModel)]="selectedNotificationType" [style]="{'width':'90%'}">
+                <ng-template let-notificationType pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{notificationType.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-sm-4" style="text-align:right">
+            <button pButton class="borderlessButton" (click)="openImportTemplateDialog()" type="button" label="Notification" icon="fa-plus"></button>
+        </div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-3">
+            Push Notification Message
+        </div>
+        <div class="ui-grid-col-9">
+            <textarea pInputTextarea type="text" [(ngModel)]="pushNotificationMessage" [rows]="2"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-3">
+            Email Subject
+        </div>
+        <div class="ui-grid-col-9">
+            <textarea pInputTextarea type="text" [(ngModel)]="emailSubject" [rows]="2"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-3">
+            Email Body
+        </div>
+        <div class="ui-grid-col-9">
+            <textarea pInputTextarea type="text" [(ngModel)]="emailBody" [rows]="20"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-3">
+            Application Notification Subject
+        </div>
+        <div class="ui-grid-col-9">
+            <textarea pInputTextarea type="text" [(ngModel)]="appNotificationSubject" [rows]="2"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-3">
+            Application Notification Body
+        </div>
+        <div class="ui-grid-col-9">
+            <textarea pInputTextarea type="text" [(ngModel)]="appNotificationBody" [rows]="20"></textarea>
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-3">
+            Description
+        </div>
+        <div class="ui-grid-col-9">
+            <textarea pInputTextarea type="text" [(ngModel)]="description" [rows]="10"></textarea>
+        </div>
+    </div>
+    <br/>
+    <div style="text-align:right">
+        <button pButton (click)="updateColumn()" class="actionButton" type="button" icon="fa-save" label="Update"></button>
+    </div>
+</div>
+
+
+<!-- Import Notification Types and templates -->
+<p-dialog header="New Notification Template" [(visible)]="showImportTemplateDialog" [modal]="true" [responsive]="true" [width]="1000"
+    [minWidth]="200" [minY]="70">
+    <p-panel header="Select existing template" [collapsed]="true" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Process:
+            </div>
+            <div class="ui-grid-col-4">
+
+                <p-dropdown (onChange)="getSelectedProcessForImportWorkflowData()" [(ngModel)]="selectedProcessForNewWorkflow" [options]="allProcesses"
+                    [autoWidth]="true" [style]="{'width': '100%'}" [group]="true" filter="true"></p-dropdown>
+            </div>
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Form:
+            </div>
+            <div class="ui-grid-col-4">
+
+                <p-dropdown (onChange)="setpopupNotificationTypes()" [options]="allWorkflowsOfProcessForImport" [(ngModel)]="selectedWorkflowForImport"
+                    [style]="{'width':'100%'}" filter="true">
+
+                    <ng-template let-workflow pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{workflow.label}}</div>
+                        </div>
+                    </ng-template>
+
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2">
+                Notification Type:
+            </div>
+            <div class="ui-grid-col-4">
+                <p-dropdown (onChange)="emptyfields()" [options]="popupNotificationTypes" [(ngModel)]="popupSelectedNotificationType" [style]="{'width':'100%'}"
+                    filter="true">
+
+                    <ng-template let-popupNotificationType pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{popupNotificationType.label}}</div>
+                        </div>
+                    </ng-template>
+
+                </p-dropdown>
+            </div>
+
+        </div>
+
+        <p-footer>
+            <button pButton type="button" (click)="setpopupColumnValue()" class="configButton" icon="fa-plus" label="Import" class="ui-button-info"></button>
+
+        </p-footer>
+    </p-panel>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+            Current Form: {{showselectedWorkflow?.label}}
+        </div>
+    </div>
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-6">
+            <p-radioButton value="new" name="groupName" label="New Template" inputId="opt1" [(ngModel)]="selectedNewValue" (click)="checkRadioValue()"></p-radioButton>    
+        </div>
+        <div class="ui-grid-col-6">
+            <p-radioButton value="existing" name="groupName" label="Existing Template" inputId="opt2" [(ngModel)]="selectedNewValue" (click)="checkRadioValue()"></p-radioButton>
+        </div>
+    </div>
+    <form [formGroup]="newVersion" (ngSubmit)="onSubmit(newVersion.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Notification Name*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea *ngIf="selectedNewValue == 'new'" pInputTextarea type="text" formControlName="NewNotificationType" [rows]="1"></textarea>
+                    <p-dropdown *ngIf="selectedNewValue == 'existing'" [options]="processGlobalNotificationTypes" formControlName="NewNotificationType" [style]="{'width':'100%'}"
+                    filter="true">
+                    <ng-template let-popupNotificationType pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{popupNotificationType.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Description*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" formControlName="Description" [rows]="10"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Push Notification*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" formControlName="PushNotification" [rows]="10"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Email Subject*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" formControlName="EmailSubject" [rows]="10"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Email Body*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" formControlName="EmailBody" [rows]="10"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    App Notification Subject*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" formControlName="AppNotificationSubject" [rows]="10"></textarea>
+                </div>
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    App Notification Body*
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" formControlName="AppNotificationBody" [rows]="10"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button type="button" class="actionButton" [disabled]="!newVersion.valid" pButton icon="fa-save" (click)="addNewtemplate()"
+            label="Save"></button>
+        <button type="button" class="actionButton" pButton icon="fa-times-circle" (click)="showImportTemplateDialog=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>
+
+<app-loading-dialog *ngIf="showLoading"></app-loading-dialog>

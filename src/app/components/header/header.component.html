@@ -1,0 +1,48 @@
+<div class="toolbarRow row">
+
+        <div class="col-sm-2">
+                <div class="logoBar">
+                        <img src="assets/images/rapidflowlogo.png" style="width:30px" />
+                        <table style="display:inline;">
+                                <tr>
+                                        <td>
+                                                <b style="color:white;">RapidFlow App Studio</b>
+                                        </td>
+                                </tr>
+                                <tr style="color:white; font-size:11px;">
+                                        <td>
+                                                {{envName}}
+                                        </td>
+                                </tr>
+                        </table>
+
+                </div>
+
+        </div>
+        <div class="col-sm-10" style="text-align:right;padding-top: 4px;">
+                <button pButton type="button" (click)="navigate('processes')" [ngClass]="{'selectedButton': selectedOption=='processes'}"
+                        icon="fa-pen-square" label="Edit Process"></button>
+
+                <button pButton type="button" (click)="navigate('newprocess')" [ngClass]="{'selectedButton': selectedOption=='newprocess'}"
+                        icon="fa-plus" label="New Process"></button>
+                <button pButton type="button" (click)="navigate('import')" [ngClass]="{'selectedButton': selectedOption=='import'}" icon="fa-arrow-alt-circle-left"
+                        label="Import Process"></button>
+                <button pButton type="button" (click)="navigate('organizations')" [ngClass]="{'selectedButton': selectedOption=='organizations'}"
+                        icon="fa-recycle" label="Manage Organization"></button>
+
+                <button pButton type="button" (click)="navigate('heartbeat')" [ngClass]="{'selectedButton': selectedOption=='heartbeat'}"
+                        icon="fa-recycle" label="Register Heartbeat"></button>
+                <button pButton type="button" (click)="navigate('resources')" [ngClass]="{'selectedButton': selectedOption=='resources'}"
+                        icon="fa-recycle" label="Manage Resources"></button>
+                <button pButton type="button" [label]="currentLoggedInUser.DisplayName" (click)="logoutBar=true" icon="fa-power-off"></button>
+
+        </div>
+
+
+</div>
+
+<p-sidebar [(visible)]="logoutBar" position="top" [baseZIndex]="10000">
+        <h3 style="font-weight:normal">Are you sure you want to logout?</h3>
+        <button pButton type="button" (click)="logoutUser()" label="Yes" class="ui-button-success"></button>
+        <button pButton type="button" (click)="logoutBar = false" label="No" class="ui-button-secondary"></button>
+</p-sidebar>

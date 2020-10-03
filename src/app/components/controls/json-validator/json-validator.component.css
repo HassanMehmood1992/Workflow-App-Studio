@@ -1,0 +1,29 @@
+#validationPanel{
+padding-top:25px;
+
+}
+#result {
+  padding: 1em;
+}
+.pass {
+  background-color: #efe;
+  color: #393;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  
+ }
+.fail {
+  background-color: #fee;
+  color: #933;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  
+   
+}
+textarea { width: 100%; 
+  border: 0px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);}
+#validatorButtonDiv{
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

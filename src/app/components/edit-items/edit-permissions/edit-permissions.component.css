@@ -1,0 +1,8 @@
+::ng-deep#permissionsDialogDiv .ui-listbox-list-wrapper{
+    height: 300px;
+}
+.customRoleButton{
+    margin-bottom: 9px;
+    margin-top: -15px;
+    text-align: right;
+}

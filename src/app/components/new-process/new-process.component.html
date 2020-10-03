@@ -1,0 +1,144 @@
+<h4>Create New Process</h4>
+<div class="ui-g">
+    <div class="ui-g-12 ui-md-2">
+        Fill the form and click save button to generate a new process.
+    </div>
+    <div class="ui-g-12 ui-md-10 ui-g-nopad">
+
+        <div class="ui-g-12 ui-g-nopad">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12">
+                    <p-growl [value]="msgs" sticky="sticky"></p-growl>
+
+                        <p-panel>
+                            <p-header>
+                                <div class="ui-helper-clearfix">
+                                    <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Generate Process</span>
+
+                                     
+
+                                </div>
+                            </p-header>
+                                <p-panel header="Select existing template" [collapsed]="true" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+                                    
+                                            <div class="ui-grid-row">
+                                                <div class="ui-grid-col-2">
+                                                    Select Process :
+                                                </div>
+                                                <div class="ui-grid-col-10">
+                                    
+                                                    <p-dropdown (onChange)="getSelectedProcessForImport()" [options]="allProcessesModel" [(ngModel)]="selectedProcessForImport" [autoWidth]="true" [style]="{'width': '100%'}" [group]="true" filter="true"></p-dropdown>
+                                                </div>
+                                            </div>
+                                          
+                                    
+                                            <p-footer>
+                                                <div style="width:100%;text-align:right">
+                                                        <button style="width:10%;background-color:#83bd02; border:0px;" pButton type="button" class="configButton" icon="fa-plus" label="Import" class="ui-button-info" (click)="fillFormWithSelectedProcess()"></button>
+                                                </div>
+                                                
+                                    
+                                            </p-footer>
+                                        </p-panel>
+                                        <form [formGroup]="processFormGroup" (ngSubmit)="onSubmit(processDetails.value)">
+                                                
+                                        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                                                
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Organization:
+                                    </div>
+                                    <div class="ui-grid-col-10">
+                                        <p-dropdown [options]="organizations" [(ngModel)]="processFormGroup._value.Organization" formControlName="Organization" [autoWidth]="false"></p-dropdown>
+                                    </div>
+                                    
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Process Name:
+                                    </div>
+                                    <div class="ui-grid-col-10">
+                                        <input class="ui-grid-col-6" pInputText type="text" formControlName="Name"  />
+                                    </div>
+                                     
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Process Reference:
+                                    </div>
+                                    <div class="ui-grid-col-10">
+                                        <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessReference" />
+                                    </div>
+                                    
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-2">
+                                        Process Image:
+                                    </div>
+                                    <div class="ui-grid-col-2">
+                                        <p-fileUpload mode="basic" name="demo[]"  url="" showUploadButton="false" auto="true" accept="image/*" maxFileSize="1000000" (onSelect)="onImageSelect($event)"></p-fileUpload>
+                                         
+                                    </div>
+                                    <div class="ui-grid-col-4" style="word-break:break-all">
+                                        {{selectedFileString}}                                        
+                                    </div>
+                                    <div class="ui-grid-col-1" *ngIf="selectedImage.length>0">
+                                        <img (click)="removeImage()" src="assets/images/removeIcon.png" style="width:20px;cursor:pointer"/>
+                                        
+                                    </div>
+                                    
+                                    <div class="ui-grid-col-1" *ngIf="selectedImage.length>0">
+                                        <button type="button" class="configButton"  pButton label="View" (click)="imageOverlay.toggle($event)"></button>
+                                    </div>
+                                     <p-overlayPanel #imageOverlay>
+                                        <img [src]="selectedImage"
+                                        />
+                                    </p-overlayPanel>
+                                </div>
+
+                                <div class="ui-grid-row">
+                                        <div class="ui-grid-col-2">
+                                         </div>
+                                        <div class="ui-grid-col-10">
+                                             <textarea pInputTextarea type="text" [rows]="5" disabled [(ngModel)]="selectedImage" formControlName="ProcessImage"></textarea>
+                                            
+                                        </div>
+                                         
+                                         
+                                    </div>
+                               
+                                <div class="ui-grid-row">
+                                        <div class="ui-grid-col-2">
+                                            Global Settings:
+                                        </div>
+                                        <div class="ui-grid-col-10">
+                                            <textarea pInputTextarea type="text" style="display:none;" [(ngModel)]="processFormGroup._value.GlobalSettingsJSON" [rows]="10" formControlName="GlobalSettingsJSON"></textarea>
+                                            <app-json-validator [(jsonAreaModel)]="processFormGroup._value.GlobalSettingsJSON"  ></app-json-validator>
+                                            
+                                        </div>
+                                     </div>
+
+                                <div style="width:100%">
+
+                                    <div style="text-align:right;float:right;width:10%">
+                                        <button [disabled]="!processFormGroup.valid"  pButton class="actionButton" (click)="addNewProcess()" type="button" icon="fa-save" label="Add"></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                        
+
+                        </p-panel>
+                </div>
+                <div class="ui-g-12 ui-md-6">
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<app-loading-dialog *ngIf="showLoading" ></app-loading-dialog>

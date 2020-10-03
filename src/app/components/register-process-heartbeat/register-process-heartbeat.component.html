@@ -1,0 +1,224 @@
+<h4>
+  Manage Heartbeat</h4>
+<div class="ui-g">
+  <div class="ui-g-12 ui-md-2">
+    Allows to update and register heartbeat.
+  </div>
+  <div class="ui-g-12 ui-md-10 ui-g-nopad">
+
+    <div class="ui-g-12 ui-g-nopad">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12">
+          <p-growl [value]="msgs" sticky="sticky"></p-growl>
+
+          <p-panel>
+            <p-header>
+              <div class="ui-helper-clearfix">
+                <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Update Process Heartbeat</span>
+
+
+                <div class=" col-sm-4" style="float:right; text-align: right;">
+                    <button pButton class="borderlessButton" (click)="openImportTemplateDialog()" type="button" label="Register New Workflow"
+                      icon="fa-plus"></button>
+                  </div>
+              </div>
+            </p-header>
+            <div class="">
+              <div class="row">
+                <div class=" col-sm-12  ">
+                  <label class="mainLabel">
+                    Process
+                  </label>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class=" col-sm-12  ">
+
+                  <p-dropdown (onChange)="getWorkflows()" [options]="Processes" [(ngModel)]="selectedProcess" [style]="{'width':'100%'}">
+
+                    <ng-template let-process pTemplate="item">
+                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{process.label}}</div>
+                      </div>
+                    </ng-template>
+
+                  </p-dropdown>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class=" col-sm-12  ">
+                  <label class="mainLabel">
+                    Form:
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class=" col-sm-12  ">
+
+                  <p-dropdown (onChange)="setStatusValue()" [options]="Workflows" [(ngModel)]="selectedWorkflow" [style]="{'width':'100%'}">
+
+                    <ng-template let-notificationType pTemplate="item">
+                      <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{notificationType.label}}</div>
+                      </div>
+                    </ng-template>
+
+                  </p-dropdown>
+                </div>
+
+                
+              </div>
+              <div class="row">
+                  <div class="col-sm-12">
+                    <label class="mainLabel">
+                      Reason
+                    </label>
+  
+                  </div>
+                </div>
+              <div class="row">
+                
+                <div class=" col-sm-12  ">
+                  <textarea [(ngModel)]="reason" class="itemTextArea" style="width: 100%;
+            height: 200px;    margin-top: 0;" rows="5">
+            
+         
+  
+        </textarea>
+                </div>
+              </div>
+
+              <br/>
+              <div style="text-align:right">
+
+                <button pButton *ngIf="workflowstatus" (click)="updateStatus('Deactivate')" class="actionButton" type="button" icon="fa-save" label="Deactivate"></button>
+                <button pButton *ngIf="!workflowstatus"(click)="updateStatus('Activate')" class="actionButton" type="button" icon="fa-save" label="Activate"></button>
+              </div>
+            </div>
+
+          </p-panel>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<p-dialog  header="Register New Worklfow" [(visible)]="showImportTemplateDialog" [modal]="true" [responsive]="true" [width]="1000" [minWidth]="200" [minY]="70">
+
+  <form [formGroup]="newVersion" (ngSubmit)="onSubmit(newVersion.value)">
+    
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+         
+        <div class="ui-grid-row">
+            <!-- <div class="ui-grid-col-4">
+                : {{selectedWorkflow.label}}
+            </div> -->
+        </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process Name*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessName"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process ID*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessID"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Form Name*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="WorkflowName"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Workflow ID*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="WorkflowID"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process Reference*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessReference"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process Description*
+              </div>
+              <div class="ui-grid-col-10">
+                  <textarea pInputTextarea type="text" formControlName="ProcessDescription" [rows]="10"></textarea>
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Organization*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="Organization"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process Owner Email*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessOwnerEmail"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process Admin Email*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessAdminEmail"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process CMDBID*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessCMDBID"  />
+              </div>
+          </div>
+          <div class="ui-grid-row">
+              <div class="ui-grid-col-2">
+                  Process Version*
+              </div>
+              <div class="ui-grid-col-10">
+                  <input class="ui-grid-col-6" pInputText type="text" formControlName="ProcessVersion"  />
+              </div>
+          </div>
+     
+
+
+      </div>
+  </form>
+
+  <p-footer>
+      <button type="button" class="actionButton" [disabled]="!newVersion.valid" pButton icon="fa-save" (click)="registerNewWorkflow()" label="Save"></button>
+      <button type="button" class="actionButton" pButton icon="fa-times-circle" (click)="showImportTemplateDialog=false" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+
+<app-loading-dialog *ngIf="showLoading"></app-loading-dialog>

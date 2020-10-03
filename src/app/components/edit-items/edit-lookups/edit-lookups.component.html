@@ -1,0 +1,122 @@
+<div class="processItemContainer">
+    <h4 class="processItemHeading">Edit Lookup</h4>
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="mainLabel">
+                Lookup:
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <label class="mainLabel">
+                Objects:
+            </label>
+        </div>
+        <div class="col-sm-4">
+            <label class="mainLabel">
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <p-dropdown [options]="lookups" [(ngModel)]="selectedLookup" (onChange)="showSelectedItem()" [style]="{'width':'90%'}">
+                <ng-template let-lookup pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{lookup.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-sm-4">
+            <p-dropdown [options]="configurationItems" [(ngModel)]="selectedSettingName" (onChange)="showSelectedItem()" [style]="{'width':'90%'}">
+                <ng-template let-cItem pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{cItem.label}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+        <div class="col-sm-4" style="text-align:right">
+            <button pButton class="borderlessButton" (click)="showNewLookupDialog()" type="button" label="Lookup" icon="fa-plus"></button>
+        </div>
+    </div>
+
+    <app-json-validator [(jsonAreaModel)]="currentSettingVal" *ngIf="selectedSetting.Type=='json'"></app-json-validator>
+    <div id="configArea">
+        <textarea *ngIf="selectedSetting.Type=='text'" [(ngModel)]="currentSettingVal" class="itemTextArea" style="width: 100%;height: 500px;"
+            rows="10" cols="120">
+        </textarea>
+    </div>
+    <br/>
+    <div style="text-align:right">
+        <button pButton class="actionButton" type="button" icon="fa-save" (click)="updateLookupDetails()" label="Save"></button>
+    </div>
+</div>
+
+<!-- New Workflows -->
+<p-dialog header="New Process Lookup" [(visible)]="showNewLookupSection" [modal]="true" [responsive]="true" [width]="900"
+    [minWidth]="350" [minY]="80">
+    <p-panel header="Select existing template" [collapsed]="true" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Process:
+            </div>
+            <div class="ui-grid-col-4">
+                <p-dropdown (onChange)="getSelectedProcessDataForImportLookup()" [(ngModel)]="selectedProcessForImportLookup" [options]="importProcessOptions"
+                    [autoWidth]="true" [style]="{'width': '100%'}" [group]="true" filter="true"></p-dropdown>
+            </div>
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Lookup :
+            </div>
+            <div class="ui-grid-col-4">
+                <p-dropdown [options]="importLookupOptions" [(ngModel)]="importLookup" [ngModelOptions]="{standalone: true}" [style]="{'width':'90%'}">
+                    <ng-template let-lookup pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{lookup.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <p-footer>
+            <button pButton type="button" class="configButton" (click)="showImportedItems()" icon="fa-plus" label="Import" class="ui-button-info"></button>
+        </p-footer>
+    </p-panel>
+    <form [formGroup]="newLookupFormGroup" (ngSubmit)="onSubmit(newLookup.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <label>Header Details *:</label>
+            </div>
+            <div class="ui-grid-row">
+                <textarea style="display:none;" [(ngModel)]="newLookupFormGroup._value.LookupHeader" pInputTextarea type="text" [rows]="10"
+                    formControlName="LookupHeader"></textarea>
+                <app-json-validator [(jsonAreaModel)]="newLookupFormGroup._value.LookupHeader" style="width:100%;"></app-json-validator>
+            </div>
+            <div class="ui-grid-row">
+                <label>Column Details *:</label>
+            </div>
+            <div class="ui-grid-row">
+                    <textarea style="display:none;" [(ngModel)]="newLookupFormGroup._value.LookupColumns" pInputTextarea type="text" [rows]="10"
+                    formControlName="LookupColumns"></textarea>
+                <app-json-validator [(jsonAreaModel)]="newLookupFormGroup._value.LookupColumns" style="width:100%;"></app-json-validator>
+            </div>
+            <div class="ui-grid-row">
+                <label>Lookup HTML *:</label>
+            </div>
+            <div class="ui-grid-row">
+                <textarea class="itemTextArea" [(ngModel)]="newLookupFormGroup._value.LookupHTML" rows="5" cols="10" formControlName="LookupHTML"></textarea>
+            </div>
+            <div class="ui-grid-row">
+                <label>Lookup Controller *:</label>
+            </div>
+            <div class="ui-grid-row">
+                <textarea class="itemTextArea" [(ngModel)]="newLookupFormGroup._value.LookupController" rows="5" cols="10" formControlName="LookupController"></textarea>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button type="button" pButton icon="fa-check" (click)="addNewLookup()" [disabled]="!newLookupFormGroup.valid" label="Save"></button>
+        <button type="button" pButton icon="fa-close" (click)="showNewLookupSection=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>
+
+<app-loading-dialog *ngIf="showLoading" ></app-loading-dialog>

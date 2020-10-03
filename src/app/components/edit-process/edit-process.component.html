@@ -1,0 +1,55 @@
+<div id="editProcessMainDiv">
+    <h4>Process Objects </h4>
+    <p-tabView orientation="left">
+        <p-tabPanel header="Process Settings" [selected]="true">
+            <app-edit-process-settings [hidden]="itemsLoaded.Settings" (loadingOutput)="showLoadedItem($event)" [selectedOrganizationInput]="selectedOrganization" [selectedProcessInput]="selectedProcess" (configValue)="getAndEmitConfigValue($event)"></app-edit-process-settings>
+            <div class="loadingItemsDiv" [hidden]="!itemsLoaded.Settings">
+                <img class="loadingItemsImage" src="assets/images/logo_rotate.gif" />
+
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Forms">
+            <app-edit-workflows [selectedProcessInput]="selectedProcess" [hidden]="itemsLoaded.Workflows" (loadingOutput)="showLoadedItem($event)" (configValue)="getAndEmitConfigValue($event)"></app-edit-workflows>
+            <div class="loadingItemsDiv" [hidden]="!itemsLoaded.Workflows">
+                <img class="loadingItemsImage" src="assets/images/logo_rotate.gif" />
+
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Lookups">
+            <app-edit-lookups [selectedProcessInput]="selectedProcess" [hidden]="itemsLoaded.Lookups" (loadingOutput)="showLoadedItem($event)" (configValue)="getAndEmitConfigValue($event)"></app-edit-lookups>
+            <div class="loadingItemsDiv" [hidden]="!itemsLoaded.Lookups">
+                <img class="loadingItemsImage" src="assets/images/logo_rotate.gif" />
+
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Reports">
+            <app-edit-reports [processObject]="selectedProcess" (configValue)="getAndEmitConfigValue($event)"></app-edit-reports>
+        </p-tabPanel>
+        <p-tabPanel header="Pivots">
+            <app-edit-pivots [processObject]="selectedProcess" (configValue)="getAndEmitConfigValue($event)"></app-edit-pivots>
+        </p-tabPanel>
+        <p-tabPanel header="Addons">
+            <app-edit-addons [processObject]="selectedProcess" (configValue)="getAndEmitConfigValue($event)"></app-edit-addons>
+        </p-tabPanel>
+        <p-tabPanel header="Stored Queries">
+            <app-edit-stored-query [processObject]="selectedProcess" (configValue)="getAndEmitConfigValue($event)"> </app-edit-stored-query>
+        </p-tabPanel>
+        <p-tabPanel header="Roles">
+
+            <app-edit-permissions [selectedProcessInput]="selectedProcess" [hidden]="itemsLoaded.Permissions" (loadingOutput)="showLoadedItem($event)"></app-edit-permissions>
+            <div class="loadingItemsDiv" [hidden]="!itemsLoaded.Permissions">
+                <img class="loadingItemsImage" src="assets/images/logo_rotate.gif" />
+
+            </div>
+
+        </p-tabPanel>
+        <p-tabPanel header="Notifications">
+            <app-edit-notifications (configValue)="getAndEmitConfigValue($event)" [selectedProcessInput]="selectedProcess"></app-edit-notifications>
+
+        </p-tabPanel>
+        <p-tabPanel header="Manage Resources">
+            <app-manage-resources [processObject]="selectedProcess" (configValue)="getAndEmitConfigValue($event)"> </app-manage-resources>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>

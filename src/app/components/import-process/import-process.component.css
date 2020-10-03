@@ -1,0 +1,47 @@
+::ng-deep #importTreeDiv .ui-tree{
+    font-size:16px;
+    width: 90%;
+}
+#importMainDiv{
+    margin: 20px;
+}
+
+.mainLabel{
+    background-color: #186ba0;
+    color: white;
+    padding: 2px 10px 2px 8px;
+    margin-right: 7px;
+    border-radius: 4px;
+    font-size: 16px;
+    box-shadow: 0 0 1px 0px grey;
+    font-weight: inherit;
+    width:90%;
+}
+.ui-grid-row{
+    padding: 5px;
+}
+
+::ng-deep #importMainDiv .ui-tree{
+    font-size:17px;
+    width: 99%;
+    margin-top: 10px;
+}
+
+.statusLabel{
+    margin-bottom: 15px;
+}
+
+#importProgressDiv{
+    padding:20px;
+}
+#importStatusDiv{
+    padding: 20px;
+}
+
+/* ::ng-deep#importProgressDiv .ui-progressbar-value{
+    background-color: #83bd02
+}
+
+::ng-deep#importProgressDiv .ui-progressbar-label{
+    color: white
+} */

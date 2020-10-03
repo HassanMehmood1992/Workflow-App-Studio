@@ -1,0 +1,137 @@
+<div class="processItemContainer">
+    <h4 class="processItemHeading">Edit Pivot</h4>
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="mainLabel">
+              Pivot:
+          </label>
+        </div>
+        <div class="col-sm-4">
+            <label class="mainLabel">
+              Objects:
+          </label>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+
+            <p-dropdown [options]="PivotsToShows" (onChange)="getSelectedSettings()" [(ngModel)]="selectedPivot" [style]="{'width':'90%'}">
+
+                <ng-template let-Pivot pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{Pivot.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+
+        </div>
+        <div class="col-sm-4">
+
+            <p-dropdown [options]="configurationItems" (onChange)="getSelectedSettings()" [(ngModel)]="selectedItem" [style]="{'width':'90%'}">
+
+                <ng-template let-Item pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{Item.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+        </div>
+        <div class="col-sm-3">
+
+
+        </div>
+        <div class="col-sm-3" style="text-align:right">
+            <button pButton class="borderlessButton" (click)="showPivotDisplay=true" type="button" label="Pivot" icon="fa-plus"></button>
+        </div>
+    </div>
+
+    <app-json-validator [(jsonAreaModel)]="currentSettingVal" *ngIf="selectedSetting.Type=='json'"></app-json-validator>
+    <div id="configArea">
+
+        <textarea *ngIf="selectedSetting.Type=='text'" [(ngModel)]="currentSettingVal" rows="17" cols="50">
+            
+            </textarea>
+    </div>
+    <br/>
+    <div style="text-align:right">
+
+        <button pButton class="actionButton" type="button" icon="fa-pencil-alt" label="Edit"></button>
+        <button pButton (click)="applySettings()" class="actionButton" type="button" icon="fa-save" label="Save"></button>
+    </div>
+</div>
+
+
+
+<!-- Add Pivot -->
+<p-dialog header="New Pivot" [(visible)]="showPivotDisplay" [modal]="true" [responsive]="true" [width]="1000" [minWidth]="200" [minY]="70">
+    <p-panel header="Select existing template" [collapsed]="true" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Process:
+            </div>
+            <div class="ui-grid-col-4">
+
+                <p-dropdown (onChange)="getSelectedProcessForImportPivotData()" [(ngModel)]="selectedProcessForNewPivot" [options]="allProcesses" [autoWidth]="true" [style]="{'width': '100%'}" [group]="true" filter="true"></p-dropdown>
+            </div>
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Pivot :
+            </div>
+            <div class="ui-grid-col-4">
+
+                <p-dropdown [options]="allPivotsOfProcessForImport" [(ngModel)]="selectedPivotForImport" [style]="{'width':'100%'}" filter="true">
+
+                    <ng-template let-Pivot pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{Pivot.label}}</div>
+                        </div>
+                    </ng-template>
+
+                </p-dropdown>
+            </div>
+        </div>
+
+        <p-footer>
+            <div style="width:100%;text-align:right;">
+                <button (click)="fillNewPivotForm()" pButton type="button" style="background-color:#83bd02; border:0px;" icon="fa-plus" label="Import" class="ui-button-info"></button>
+            </div>
+
+
+        </p-footer>
+    </p-panel>
+    <form [formGroup]="newPivotFormGroup" (ngSubmit)="onSubmit(newPivot.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    ObjectDescription
+                </div>
+                <div class="ui-grid-col-8">
+                    <app-json-validator [(jsonAreaModel)]="newPivotFormGroup._value.ObjectDescription"></app-json-validator>
+                    <!-- <textarea pInputTextarea type="text" [rows]="10" [(ngModel)]="newPivotFormGroup._value.ObjectDescription" formControlName="ObjectDescription"></textarea> -->
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Value
+                </div>
+                <div class="ui-grid-col-8">
+                    <app-json-validator [(jsonAreaModel)]="newPivotFormGroup._value.Value"></app-json-validator>
+                    <!-- <textarea pInputTextarea type="text" [rows]="10" [(ngModel)]="newPivotFormGroup._value.Value" formControlName="Value"></textarea> -->
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </form>
+
+    <p-footer>
+        <button type="button" class="actionButton" [disabled]="!newPivotFormGroup.valid" pButton icon="fa-save" (click)="addNewPivot()" label="Save"></button>
+        <button type="button" class="actionButton" pButton icon="fa-times-circle" (click)="showPivotDisplay=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>

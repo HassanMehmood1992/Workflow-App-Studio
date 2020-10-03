@@ -1,0 +1,14 @@
+.rotatingLogo{
+    width: 70px;
+    margin-left: -5%;
+}
+#loadingDialogMainDiv{
+    font-size: 15px;
+}
+::ng-deep #loadingDialogMainDiv .ui-dialog-titlebar{
+    font-size: 12px;
+}
+
+::ng-deep #loadingDialogMainDiv .ui-dialog{
+    min-height: unset !important;
+}

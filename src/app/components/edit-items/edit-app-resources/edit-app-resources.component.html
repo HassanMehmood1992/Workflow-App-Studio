@@ -1,0 +1,85 @@
+<div class="processItemContainer">
+  <h4 class="processItemHeading">Edit Application Resources</h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <label class="mainLabel">
+        Object:
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <p-dropdown [options]="applicationObjectTypes" [(ngModel)]="selectedObject" (onChange)="setObjectDetails()" [style]="{'width':'90%'}">
+        <ng-template let-item pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;margin-top:4px">{{item.label}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="col-sm-4" style="text-align:right">
+      <button pButton class="borderlessButton" (click)="showNewApplicationObjectDialog()" type="button" label="Application Resource" icon="fa-plus"></button>
+    </div>
+  </div>
+  <br/>
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-2">
+      Name
+    </div>
+    <div class="ui-grid-col-10">
+      <textarea pInputTextarea type="text" disabled [(ngModel)]="objectName" [rows]="2"></textarea>
+    </div>
+  </div>
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-2">
+      Description
+    </div>
+    <div class="ui-grid-col-10">
+      <textarea pInputTextarea type="text" disabled [(ngModel)]="objectDescription" [rows]="2"></textarea>
+    </div>
+  </div>
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-2">
+      Value
+    </div>
+    <div class="ui-grid-col-10">
+      <textarea pInputTextarea type="text" [(ngModel)]="objectValue" [rows]="20"></textarea>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <button pButton class="actionButton" type="button" icon="fa-save" (click)="updateApplicationObjectDetails()" label="Save"></button>
+  </div>
+</div>
+
+<!-- New Application Resource -->
+<p-dialog header="New Application Resource" [(visible)]="showNewApplicationObjectSection" [modal]="true" [responsive]="true" [width]="900"
+    [minWidth]="350" [minY]="80">
+    <form [formGroup]="newApplicationObjectFormGroup" (ngSubmit)="onSubmit(newLookup.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+                <label>Name *:</label>
+            </div>
+            <div class="ui-grid-row">
+                <textarea [(ngModel)]="newApplicationObjectFormGroup._value.Name" rows="1" cols="10" formControlName="Name"></textarea>
+            </div>
+            <br/>
+            <div class="ui-grid-row">
+                <label>Description *:</label>
+            </div>
+            <div class="ui-grid-row">
+                <textarea [(ngModel)]="newApplicationObjectFormGroup._value.Description" rows="2" cols="10" formControlName="Description"></textarea>
+            </div>
+            <br/>
+            <div class="ui-grid-row">
+                <label>Value *:</label>
+            </div>
+            <div class="ui-grid-row">
+                <textarea [(ngModel)]="newApplicationObjectFormGroup._value.Value" rows="15" cols="10" formControlName="Value"></textarea>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button type="button" pButton icon="fa-check" (click)="addResource()" [disabled]="!newApplicationObjectFormGroup.valid" label="Save"></button>
+        <button type="button" pButton icon="fa-close" (click)="showNewApplicationObjectSection=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>

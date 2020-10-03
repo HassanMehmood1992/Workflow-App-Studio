@@ -1,0 +1,11 @@
+<div id="editProcessMainDiv">
+  <h4>Items </h4>
+  <p-tabView orientation="left">
+      <p-tabPanel header="Application Resources" [selected]="true">
+        <app-edit-app-resources [(applicationObjectsInput)]="applicationObjects"></app-edit-app-resources>
+      </p-tabPanel>
+      <p-tabPanel header="Notifications">
+          <app-edit-app-notifications [(globalNotificationsInput)]="globalNotifications" [(globalNotificationTypesInput)]="globalNotificationTypes"></app-edit-app-notifications>
+      </p-tabPanel>
+  </p-tabView>
+</div>

@@ -1,0 +1,29 @@
+<app-process-selector [hidden]="!processLoaded" (processChange)="getSelectedProcess($event)" (organizationChange)="getSelectedOrganization($event)">
+</app-process-selector>
+<div class="manageProcessMainDiv" >
+
+    <div class="processTabsDiv" *ngIf="processLoaded&&processValid">
+        <p-tabView>
+            <p-tabPanel header="Edit Items" leftIcon="fa-edit">
+                <app-edit-process [selectedProcessInput]="selectedProcess" [selectedOrganizationInput]="selectedOrganization" (configValue)="pushProcessConfigItemsForExportAndCloning($event)"></app-edit-process>
+            </p-tabPanel>
+            <p-tabPanel header="Export" leftIcon="fa-share-square">
+                <app-export-process [selectedProcessInput]="selectedProcess" [allProcessConfigDataInput]="allProcessConfigData"></app-export-process>
+            </p-tabPanel>
+            <p-tabPanel header="Clone" leftIcon="fa-copy">
+                <app-export-process></app-export-process>
+            </p-tabPanel>
+            <p-tabPanel header="Recycle Bin" leftIcon="fa-trash">
+                <app-recycle-bin [selectedProcessInput]="selectedProcess" [allProcessConfigDataInput]="allProcessConfigData"></app-recycle-bin>
+            </p-tabPanel>
+        </p-tabView>
+    
+    </div>
+    <div class="loadingProcessItemsDiv" [hidden]="processLoaded">
+        <img style="width:100px;" src="assets/images/logo_rotate.gif"/>Loading processes...
+    </div>
+<div class="invalidProcessDiv" [hidden]="processValid">
+    No process exists for the selected organization
+</div>
+   
+</div>

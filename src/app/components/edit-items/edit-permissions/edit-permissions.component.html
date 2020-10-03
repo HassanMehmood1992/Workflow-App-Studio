@@ -1,0 +1,129 @@
+<div class="processItemContainer">
+    <h4 class="processItemHeading">Edit Permissions</h4>
+    <div class="ui-grid-row customRoleButton">
+        <button pButton class="borderlessButton" (click)="showNewRoleDialog()" type="button" label="Custom Role" icon="fa-plus"></button>
+    </div>
+
+
+
+    <p-accordion>
+        <p-accordionTab *ngFor="let role of permissionViewJSON" header="{{role.RoleName}}">
+
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-1 ">
+                    <i style="color:#186ba0;font-size:15px;cursor:pointer" (click)="showEditDialog(role.DistinctPermissionRows,role.RoleID,role.RoleName)"
+                        class="fas fa-edit"></i>
+                </div>
+                <div class="ui-grid-col-3" [innerHTML]="role.UsersString|escapehtml">
+
+                </div>
+                <div class="ui-grid-col-8" [innerHTML]="role.Permission|escapehtml">
+
+                </div>
+
+            </div>
+
+        </p-accordionTab>
+
+    </p-accordion>
+</div>
+
+
+<p-dialog header="{{currentSelectedRoleName}}" [(visible)]="showEditPermissionsDialog" [modal]="true" [responsive]="true"
+    [width]="900" [height]="500" [minWidth]="200" [minY]="70">
+
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+            <label>Items</label>
+        </div>
+        <div class="ui-grid-col-4">
+            <label>Objects</label>
+        </div>
+        <div class="ui-grid-col-4">
+            <label>Permissions</label>
+        </div>
+
+    </div>
+    <div class="ui-grid-row" id="permissionsDialogDiv">
+        <div class="ui-grid-col-4">
+            <p-listbox [options]="itemTypes" (onChange)="setItemsBasedOnItemType()" [(ngModel)]="selectedItemType" [style]="{'width':'200px'}"
+                optionLabel="name"></p-listbox>
+        </div>
+        <div class="ui-grid-col-4">
+            <p-listbox [options]="items" (onChange)="setSelectedPermissionModel()" [(ngModel)]="selectedItem" [style]="{'width':'200px'}"
+                optionLabel="name"></p-listbox>
+
+        </div>
+        <div class="ui-grid-col-4">
+            <div>
+                <div *ngFor="let permission of selectedPermissionModel">
+                    <input type="checkbox" (change)="getSelectedPermissionModel()" [(ngModel)]="permission.checked" />{{permission.name}}</div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <p-footer>
+        <button class="actionButton" type="button" pButton (click)="applyPermissions()" label="Apply"></button>
+        <button class="actionButton" type="button" pButton (click)="showEditPermissionsDialog=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>
+
+<app-loading-dialog *ngIf="showLoading"></app-loading-dialog>
+
+
+<!-- Add Role -->
+<p-dialog header="New Role" [(visible)]="addRoleDialogVisible" [modal]="true" [responsive]="true" [width]="1000" [minWidth]="200"
+    [minY]="70">
+
+    <form [formGroup]="newRoleFormGroup" (ngSubmit)="onSubmit(newRole.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+
+
+
+
+            <div class="ui-grid-row">
+                
+               
+
+
+                <div class="ui-grid-col-2">
+                Role Name:
+            </div>
+            <div class="ui-grid-col-10">
+                               <input  type="text" formControlName="RoleName" maxlength="50" style="width:100%;">
+                
+                
+            </div>
+
+            </div>
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-12">
+                        <input type="checkbox" formControlName="AllowEveryone" >    
+                        <span style="margin-left:5px;">
+                                Allow Everyone
+                                
+                        </span>
+                        
+                        
+                </div>
+              
+            </div>
+
+
+
+        </div>
+
+
+    </form>
+
+    <p-footer>
+        <button type="button" class="actionButton" [disabled]="!newRoleFormGroup.valid" pButton icon="fa-save" (click)="addNewRole()"
+            label="Save"></button>
+        <button type="button" class="actionButton" pButton icon="fa-times-circle" (click)="addRoleDialogVisible=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>

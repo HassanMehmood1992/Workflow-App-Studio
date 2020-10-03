@@ -1,0 +1,5 @@
+::ng-deep #exportNewDiv .ui-tree{
+    font-size:17px;
+    width: 100%;
+    margin-top: 10px;
+}

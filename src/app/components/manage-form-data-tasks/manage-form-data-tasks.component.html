@@ -1,0 +1,36 @@
+<h4>Operation Statement</h4>
+<div class="ui-grid-row">
+  <textarea pInputTextarea type="text" [(ngModel)]="operationStatement" (keyup)="keyupEvent($event)" [rows]="10"></textarea>
+</div>
+
+<br/>
+
+<div class="ui-grid-row" style="text-align:right">
+  <button pButton (click)="executeOperation()" type="button" label="Execute" icon="fa-recycle"></button>
+</div>
+
+<h4>Result</h4>
+<div class="ui-grid-row" *ngIf="operationResult == ''">
+  <p-table [value]="operationResultJson" [scrollable]="true" scrollHeight="500px" [resizableColumns]="true" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of columns" pResizableColumn>
+                {{col}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-car>
+        <tr>
+            <td *ngFor="let col of columns" class="ui-resizable-column">
+                    {{car[col]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+
+<div class="ui-grid-row" *ngIf="operationResult != ''">
+        {{operationResult}}
+</div>
+
+<app-loading-dialog *ngIf="showLoading" ></app-loading-dialog>

@@ -1,0 +1,9 @@
+.loadingItemsDiv{
+    text-align: center;
+    padding-top: 9%;
+    padding-bottom: 9%;
+    padding-right: 50px;
+}
+.loadingItemsImage{
+    width: 110px;
+}

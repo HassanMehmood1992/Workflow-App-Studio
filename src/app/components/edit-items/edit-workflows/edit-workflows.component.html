@@ -1,0 +1,244 @@
+<div class="processItemContainer">
+    <h4 class="processItemHeading">Edit Form</h4>
+    <div class="row">
+        <div class="col-sm-3">
+            <label class="mainLabel">
+                Form:
+            </label>
+        </div>
+        <div class="col-sm-3">
+            <label class="mainLabel">
+                Objects:
+            </label>
+        </div>
+        <div class="col-sm-3">
+            <label class="mainLabel">
+                Version:
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+
+            <p-dropdown (onChange)="getVersionsForWorkflow()" [options]="workflows" [(ngModel)]="selectedWorkflow" [style]="{'width':'90%'}">
+
+                <ng-template let-workflow pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{workflow.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+
+        </div>
+        <div class="col-sm-3">
+
+            <p-dropdown (onChange)="getSelectedSettings()" [options]="configurationItems" [(ngModel)]="selectedSettingName" [style]="{'width':'90%'}">
+
+                <ng-template let-cItem pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{cItem.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+        </div>
+        <div class="col-sm-3">
+
+            <p-dropdown (onChange)="getSelectedSettings()" [options]="versions" [(ngModel)]="selectedVersion" [style]="{'width':'90%'}">
+
+                <ng-template let-version pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{version.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+        </div>
+        <div class="col-sm-3" style="text-align:right">
+            <button pButton class="borderlessButton" (click)="showNewWorkflowDialog()" type="button" label="Form" icon="fa-plus"></button>
+            <button *ngIf="processWorklowsConfigrationData.length>0" pButton class="borderlessButton" (click)="showNewVersionDialog()" type="button" label="Version" icon="fa-plus"></button>
+        </div>
+    </div>
+
+    <app-json-validator [(jsonAreaModel)]="currentSettingVal" *ngIf="selectedSetting.Type=='json'" ></app-json-validator>
+    <div class="configArea">
+
+        <textarea [disabled]="editMode" *ngIf="selectedSetting.Type=='text'" [(ngModel)]="currentSettingVal" rows="17" cols="50">
+            
+            </textarea>
+    </div>
+
+    <br/>
+    <div style="text-align:right">
+
+         <button (click)="applySettings()"  pButton class="actionButton" type="button" icon="fa-save" label="Save"></button>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- New Workflows -->
+<p-dialog header="New {{itemToAdd}}" [(visible)]="showWorkflowDisplay" [modal]="true" [responsive]="true" [width]="1000" [minWidth]="200" [minY]="70">
+        <p-panel *ngIf="!versionUpdate" header="Select existing template" [collapsed]="true" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+                
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                                Process:
+                            </div>
+                            <div class="ui-grid-col-4">
+                
+                                <p-dropdown (onChange)="getSelectedProcessForImportWorkflowData()" [(ngModel)]="selectedProcessForNewWorkflow" [options]="allProcesses" [autoWidth]="true" [style]="{'width': '100%'}" [group]="true" filter="true"></p-dropdown>
+                            </div>
+                            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                                Form:
+                            </div>
+                            <div class="ui-grid-col-4">
+                
+                                 <p-dropdown [options]="allWorkflowsOfProcessForImport"  [(ngModel)]="selectedWorkflowForImport" [style]="{'width':'100%'}" filter="true">
+                                    
+                                                <ng-template let-workflow pTemplate="item">
+                                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                                        <div style="font-size:14px;margin-top:4px">{{workflow.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                    
+                                            </p-dropdown>
+                            </div>
+                        </div>
+                     
+                
+                        <p-footer>
+                            <div style="width:100%;text-align:right;">
+                                    <button (click)="fillNewWorkflowForm()"  pButton type="button" style="background-color:#83bd02; border:0px;" icon="fa-plus" label="Import" class="ui-button-info"></button>
+                            </div>
+                            
+                
+                        </p-footer>
+                    </p-panel>
+    <form [formGroup]="newWorkflowFormGroup" (ngSubmit)="onSubmit(newWorkflow.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+      
+
+          
+ 
+            <div class="ui-grid-row" *ngIf="!versionUpdate">
+                <div class="ui-grid-col-4">
+                    Workflow Setting JSON:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea style="display:none;"  [(ngModel)]="newWorkflowFormGroup._value.WorkflowSettingsJSON" pInputTextarea type="text" [rows]="10" formControlName="WorkflowSettingsJSON"></textarea>
+                    <app-json-validator [(jsonAreaModel)]="newWorkflowFormGroup._value.WorkflowSettingsJSON"  ></app-json-validator>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Form Html:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" [rows]="10" formControlName="FormHTML"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Form Controller:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" [rows]="10" formControlName="FormController"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Wokrlfow Tasks JSON:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea style="display:none;" pInputTextarea type="text" [(ngModel)]="newWorkflowFormGroup._value.WorkflowTasksJSON" [rows]="10" formControlName="WorkflowTasksJSON"></textarea>
+                    <app-json-validator [(jsonAreaModel)]="newWorkflowFormGroup._value.WorkflowTasksJSON"  ></app-json-validator>
+                    
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Default Value JSON:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea style="display:none;" pInputTextarea type="text" [(ngModel)]="newWorkflowFormGroup._value.DefaultValuesJSON" [rows]="10" formControlName="DefaultValuesJSON"></textarea>
+                    <app-json-validator [(jsonAreaModel)]="newWorkflowFormGroup._value.DefaultValuesJSON"  ></app-json-validator>
+                    
+
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Repeating Table JSON:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea style="display:none;" pInputTextarea type="text" [(ngModel)]="newWorkflowFormGroup._value.RepeatingTableJSON" [rows]="10" formControlName="RepeatingTableJSON"></textarea>
+                    <app-json-validator [(jsonAreaModel)]="newWorkflowFormGroup._value.RepeatingTableJSON"  ></app-json-validator>
+                    
+                </div>
+            </div>
+          
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    PDF CSS:
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" [rows]="10" formControlName="PdfCss"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+    <p-footer>
+        <button type="button" class="actionButton" [disabled]="!newWorkflowFormGroup.valid"  pButton icon="fa-save" (click)="addNewWorkflowOrVersion()" label="Save"></button>
+        <button type="button" class="actionButton" pButton icon="fa-times-circle" (click)="showWorkflowDisplay=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>
+
+
+
+<app-loading-dialog *ngIf="showLoading" ></app-loading-dialog>

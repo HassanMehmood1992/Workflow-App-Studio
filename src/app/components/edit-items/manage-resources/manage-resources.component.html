@@ -1,0 +1,145 @@
+<div class="processItemContainer">
+    <h4 class="processItemHeading">Edit Resource</h4>
+    <div class="row">
+        <div class="col-sm-6">
+            <label class="mainLabel">
+            Resource:
+        </label>
+        </div>
+        <!-- <div class="col-sm-4">
+            <label class="mainLabel">
+            Item:
+        </label>
+        </div> -->
+
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+
+            <p-dropdown [options]="ResourcesToShows" (onChange)="getSelectedSettings()" [(ngModel)]="selectedResource" [style]="{'width':'90%'}">
+
+                <ng-template let-Resource pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{Resource.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+
+        </div>
+        <!-- <div class="col-sm-4">
+
+            <p-dropdown [options]="configurationItems" (onChange)="getSelectedSettings()" [(ngModel)]="selectedItem" [style]="{'width':'90%'}">
+
+                <ng-template let-Item pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;margin-top:4px">{{Item.label}}</div>
+                    </div>
+                </ng-template>
+
+            </p-dropdown>
+        </div> -->
+        <div class="col-sm-3">
+
+
+        </div>
+        <div class="col-sm-3" style="text-align:right">
+            <button pButton class="borderlessButton" (click)="showResourceDisplay=true" type="button" label="Add Resource" icon="fa-plus"></button>
+            <button pButton class="borderlessButtonDanger" (click)="deleteProcessResource()" type="button" label="Remove Current" icon="fa-minus"></button>
+        </div>
+    </div>
+
+    <app-json-validator [(jsonAreaModel)]="currentSettingVal" *ngIf="selectedSetting.Type=='json'"></app-json-validator>
+    <div id="configArea">
+
+        <textarea *ngIf="selectedSetting.Type=='text'" [(ngModel)]="currentSettingVal" rows="17" cols="50">
+          
+          </textarea>
+    </div>
+    <br/>
+    <div style="text-align:right">
+
+        <button pButton class="actionButton" type="button" icon="fa-pencil-alt" label="Edit"></button>
+        <button pButton (click)="applySettings()" class="actionButton" type="button" icon="fa-save" label="Save"></button>
+    </div>
+</div>
+
+
+
+<!-- Add Resource -->
+<p-dialog header="New Resource" [(visible)]="showResourceDisplay" [modal]="true" [responsive]="true" [width]="1000" [minWidth]="200" [minY]="70">
+    <p-panel header="Select existing template" [collapsed]="true" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Process:
+            </div>
+            <div class="ui-grid-col-4">
+
+                <p-dropdown (onChange)="getSelectedProcessForImportResourceData()" [(ngModel)]="selectedProcessForNewResource" [options]="allProcesses" [autoWidth]="true" [style]="{'width': '100%'}" [group]="true" filter="true"></p-dropdown>
+            </div>
+            <div class="ui-grid-col-2 selectTemplateLabelDiv">
+                Resource :
+            </div>
+            <div class="ui-grid-col-4">
+
+                <p-dropdown [options]="allResourcesOfProcessForImport" [(ngModel)]="selectedResourceForImport" [style]="{'width':'100%'}" filter="true">
+
+                    <ng-template let-Resource pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                            <div style="font-size:14px;margin-top:4px">{{Resource.label}}</div>
+                        </div>
+                    </ng-template>
+
+                </p-dropdown>
+            </div>
+        </div>
+
+        <p-footer>
+            <div style="width:100%;text-align:right;">
+                <button (click)="fillNewResourceForm()" pButton type="button" style="background-color:#83bd02; border:0px;" icon="fa-plus" label="Import" class="ui-button-info"></button>
+            </div>
+
+
+        </p-footer>
+    </p-panel>
+    <form [formGroup]="newResourceFormGroup" (ngSubmit)="onSubmit(newResource.value)">
+        <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Resource Name
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" [rows]="1" [(ngModel)]="newResourceFormGroup._value.Name" formControlName="Name"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Resource Description
+                </div>
+                <div class="ui-grid-col-8">
+                    <textarea pInputTextarea type="text" [rows]="3" [(ngModel)]="newResourceFormGroup._value.Description" formControlName="Description"></textarea>
+                </div>
+            </div>
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-4">
+                    Value
+                </div>
+                <div class="ui-grid-col-8">
+                    <!-- <app-json-validator [(jsonAreaModel)]="newResourceFormGroup._value.Value"></app-json-validator> -->
+                    <textarea pInputTextarea type="text" [rows]="10" [(ngModel)]="newResourceFormGroup._value.Value" formControlName="Value"></textarea>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </form>
+
+    <p-footer>
+        <button type="button" class="actionButton" [disabled]="!newResourceFormGroup.valid" pButton icon="fa-save" (click)="addNewResource()" label="Save"></button>
+        <button type="button" class="actionButton" pButton icon="fa-times-circle" (click)="showResourceDisplay=false" label="Cancel"></button>
+    </p-footer>
+</p-dialog>

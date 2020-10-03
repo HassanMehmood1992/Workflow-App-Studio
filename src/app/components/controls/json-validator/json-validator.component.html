@@ -1,0 +1,14 @@
+
+<div id="validationPanel">
+    <textarea [(ngModel)]="jsonAreaModel" (input)="emitJsonInput()" id="source" rows="17" cols="50">
+        
+        </textarea>
+        <div id="validatorButtonDiv">
+             <button style="width:100%;" class="configButton" pButton type="button" label="Validate"  (click)="validateJSON()" icon="fa-check-square"></button>
+        </div>
+        
+        <pre [innerHTML]="resultValue" id="result"></pre>
+</div>
+
+
+ 

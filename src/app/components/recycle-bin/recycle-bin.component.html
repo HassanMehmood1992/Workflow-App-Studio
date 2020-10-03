@@ -1,0 +1,80 @@
+<div id="editProcessMainDiv">
+  <h4>Items </h4>
+  <p-tabView orientation="left" (onChange)="tabChanged($event)">
+    <p-tabPanel [header]="item" *ngFor="let item of allObjectKeys; let i = index" [selected]="i == selectedObjectIndex">
+      <div *ngIf="item == 'Process'" class="processItemContainer" style="padding-top:2%;">
+          <button *ngIf="isItemDeleted" pButton (click)="updateItem(1)" class="actionButton" type="button" icon="fa-share-square" label="Restore Process"></button>
+          <button *ngIf="!isItemDeleted" pButton (click)="updateItem(0)" class="actionButton" type="button" icon="fa-trash" label="Delete Process"></button>
+      </div>
+      <div *ngIf="item == 'NotificationTemplates'" class="processItemContainer" style="padding-top:2%;">
+          <div style="margin-left:0%;" class="row">
+            <div class="col-xs-6">
+              <label class="mainLabel">
+                Select Form:
+              </label>
+            </div>
+            <div class="col-xs-6">
+                <label class="mainLabel">
+                  Select Template:
+                </label>
+              </div>
+          </div>
+          <div style="margin-left:0%;" class="row">
+            <div class="col-sm-6">
+              <p-dropdown (onChange)="populateTemplates($event)" [(ngModel)]="selectedItemWorkflowName" [options]="workflowNames" [filter]="true" 
+              [style]="{'width':'90%'}" >
+              <ng-template let-item pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                  <div style="font-size:14px;margin-top:4px">{{item.label}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            </div>
+            <div class="col-sm-6">
+                <p-dropdown (onChange)="checkItemStatus($event)" [(ngModel)]="selectedWorkflowTemplate" [options]="selectedObjectDetailsDropDown" [filter]="true" 
+                [style]="{'width':'90%'}" >
+                <ng-template let-item pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;margin-top:4px">{{item.label}}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+              </div>
+          </div>
+          <br/>
+          <div style="text-align:right">
+              <button *ngIf="isItemDeleted" pButton (click)="updateItem(0)" class="actionButton" type="button" icon="fa-share-square" label="Restore"></button>
+              <button *ngIf="!isItemDeleted" pButton (click)="updateItem(1)" class="actionButton" type="button" icon="fa-trash" label="Delete"></button>
+            </div>
+        </div>
+      <div *ngIf="item != 'Process' && item != 'NotificationTemplates'" class="processItemContainer" style="padding-top:2%;">
+          <div style="margin-left:0%;" class="row">
+            <div class="col-xs-12">
+              <label class="mainLabel">
+                Select Item to Delete/Restore:
+              </label>
+            </div>
+          </div>
+          <div style="margin-left:0%;" class="row">
+            <div class="col-sm-12">
+                <p-dropdown (onChange)="checkItemStatus($event)" [options]="selectedObjectDetailsDropDown" [filter]="true" 
+                [style]="{'width':'90%'}">
+                <ng-template let-item pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                    <div style="font-size:14px;margin-top:4px">{{item.label}}</div>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+          </div>
+          <br/>
+          <div style="text-align:right">
+              <button *ngIf="isItemDeleted" pButton (click)="updateItem(0)" class="actionButton" type="button" icon="fa-share-square" label="Restore"></button>
+              <button *ngIf="!isItemDeleted" pButton (click)="updateItem(1)" class="actionButton" type="button" icon="fa-trash" label="Delete"></button>
+            </div>
+        </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
+
+

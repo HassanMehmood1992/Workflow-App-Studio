@@ -1,0 +1,125 @@
+<h4 class="first">
+  Select Process Package to Import</h4>
+<p-fileUpload mode="basic" name="demo[]" url="" showUploadButton="false" auto="true" accept="text/*" maxFileSize="1000000"
+  (onSelect)="onFileSelect($event)"></p-fileUpload>
+<div id="importProgressDiv" *ngIf="importing">
+
+  <label class="statusLabel">Importing...</label>
+  <p-progressBar [value]="importProgress"></p-progressBar>
+</div>
+<div id="importStatusDiv" *ngIf="!importing&&importProgress==100">
+  
+    <label>{{importStatusText}}...</label>
+     
+  </div>
+
+  
+  
+<div id="importMainDiv" *ngIf="fileImported">
+  <h4>After execution of the import script:</h4>
+
+
+
+  <div *ngIf="selectedFileTextJSON.Process" id="addProcessDiv">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-12">
+        Following process will be added:
+      </div>
+
+
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        <label class="mainLabel">ProcessID </label>
+      </div>
+      <div class="ui-grid-col-9">
+        {{selectedFileTextJSON.Process.ObjectIdentity}}
+      </div>
+
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        <label class="mainLabel">Process Reference </label>
+      </div>
+      <div class="ui-grid-col-9">
+        {{selectedFileTextJSON.Process.ProcessReference}}
+      </div>
+
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2">
+        <label class="mainLabel">Organization </label>
+      </div>
+      <div class="ui-grid-col-9">
+        {{selectedFileTextJSON.Process.OrganizationName}}
+      </div>
+
+    </div>
+  </div>
+  <br/>
+  <div class="ui-grid-row" *ngIf="selectedFileTextJSON.Process&&!showTree">
+    
+
+    <div class="ui-grid-col-12"> 
+        <button type="button" class="actionButton" icon="fa-arrow-alt-circle-left" label="Import"  pButton (click)="generateParameters()"></button>
+        
+    </div>
+  </div>
+  <div [hidden]="!showTree" id="importTreeDiv">
+
+
+    <div class="ui-grid-row" *ngIf="selectedFileTextJSON.Process">
+      <div class="ui-grid-col-11">
+        Following Objects will be {{importOperation}} for this process:
+      </div>
+
+      <div class="ui-grid-col-1" style="text-align:right"> 
+          <button *ngIf="showTree" type="button" class="actionButton" icon="fa-arrow-alt-circle-left" label="Import"  pButton (click)="generateParameters()"></button>
+          
+      </div>
+    </div>
+
+    <div class="ui-grid-row" *ngIf="selectedFileTextJSON.Process==undefined">
+      <div class="ui-grid-col-12">
+        Items shown in the tree below will be {{importOperation}}ed for the following process:
+      </div>
+
+
+    </div>
+
+
+
+
+    <div class="ui-grid-row" *ngIf="selectedFileTextJSON.Process==undefined">
+      <div class="ui-grid-col-2">
+        <label class="mainLabel">ProcessID </label>
+      </div>
+      <div class="ui-grid-col-9">
+        {{selectedFileTextJSON.ExportInfo.ProcessID}}
+      </div>
+
+    </div>
+
+    <div class="ui-grid-row" *ngIf="selectedFileTextJSON.Process==undefined">
+      <div class="ui-grid-col-2">
+        <label class="mainLabel">Process Reference </label>
+      </div>
+      <div class="ui-grid-col-9">
+        {{selectedFileTextJSON.ExportInfo.ProcessReference}}
+        
+      </div>
+      <div class="ui-grid-col-1" style="text-align:right"> 
+          <button *ngIf="showTree" type="button" class="actionButton" icon="fa-arrow-alt-circle-left" label="Import"  pButton (click)="generateParameters()"></button>
+          
+      </div>
+
+    </div>
+
+
+  <p-tree [value]="importObjectsTree" expanded="true"></p-tree>
+</div>
+
+</div>
+

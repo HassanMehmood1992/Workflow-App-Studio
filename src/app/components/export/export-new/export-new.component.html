@@ -1,0 +1,15 @@
+ 
+
+
+
+<div class="processItemContainer" id="exportNewDiv">
+    <h4 class="processItemHeading">Select items to export as new</h4>    
+  <div style="text-align:right">
+    <button pButton type="button" label="Export"  (click)="generateExportScript()" icon="fa-share-square" class="actionButton"></button>
+</div>
+    <p-tree [value]="exportNewObjectsTree" selectionMode="checkbox" [(selection)]="selectedItems"></p-tree>
+    
+
+
+</div>
+

@@ -1,0 +1,104 @@
+.toolbarRow{
+    background-color: #186ba0;
+    padding: 8px 10px 8px 10px;
+    margin-bottom: 30px;
+     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.panel-heading {
+    padding: 5px 15px;
+}
+
+.panel-footer {
+    padding: 1px 15px;
+    color: #A0A0A0;
+}
+
+.profile-img {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.Aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Aligner-item {
+    max-width: 60%;
+    width: 400px
+}
+
+.Aligner-item--top {
+    align-self: flex-start;
+}
+
+.Aligner-item--bottom {
+    align-self: flex-end;
+}
+
+.form-control {
+    border-radius: 5px;
+    border: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 6px;
+    height: 50px;
+    margin: 0% !important;
+}
+
+.form-group {
+    height: 50px;
+}
+
+.input-group {
+    border: 1px solid #071D49;
+    border-radius: 6px;
+    height: 50px;
+}
+
+.input-group-addon {
+    border-bottom-left-radius: 5px !important;
+    border-top-left-radius: 5px !important;
+    background: white;
+    border: 0px;
+}
+
+#loginDiv {
+    text-align: center;
+    padding-top: 5%;
+}
+
+#LoginOptions {
+    margin-top: 6%;
+}
+
+#loogInUser {
+    margin-left: 36%;
+    margin-bottom: 1%;
+    width: 28%;
+    font-size: 14px
+}
+
+#loadingimg {
+    width: 20%;
+    height: 20%;
+}
+
+.loginButton {
+    margin-top: 5%;
+    height: 50px;
+    border-radius: 6px;
+    padding-top: 4%;
+    background-color: #186ba0 !important;
+    border: 0px !important;
+}
+
+.erroMessage {
+    color: red
+}

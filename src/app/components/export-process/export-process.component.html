@@ -1,0 +1,19 @@
+<div id="editProcessMainDiv">
+    <h4>Export as</h4>
+   <p-tabView orientation="left" >
+       <p-tabPanel header="New process or items" [selected]="true">
+          <app-export-new [allProcessConfigDataInput]="allProcessConfigData" [selectedProcessInput]="selectedProcess"></app-export-new>
+        </p-tabPanel>
+        <p-tabPanel header="Update process or items">
+          <app-export-update [allProcessConfigDataInput]="allProcessConfigData" [selectedProcessInput]="selectedProcess"></app-export-update>
+          
+       </p-tabPanel>
+       <p-tabPanel header="Delete process or items">
+          
+      </p-tabPanel>
+    
+          
+    </p-tabView>
+   
+  </div>
+  
